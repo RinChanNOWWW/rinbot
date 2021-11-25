@@ -1,4 +1,5 @@
 import time
+import datetime
 from typing import Any, Dict
 import json
 import sqlalchemy
@@ -60,7 +61,7 @@ class DataBase:
         except Exception:
             raise BindError("其他错误")
 
-    def get_recent_score(self, qq):
+    def get_recent_scores(self, qq, limit=1):
         sql = "select user_id from rinbot.sdvx_user_info where qq = :qq"
         cursor = self.engine.execute(text(sql), qq=qq)
         if cursor.rowcount != 1:
@@ -72,12 +73,34 @@ class DataBase:
             "FROM bemani.score_history AS score, bemani.music AS music " +
             "WHERE score.userid = :userid AND score.musicid = music.id " +
             "AND music.game = 'sdvx' AND music.version = 6 " +
-            "ORDER BY timestamp DESC LIMIT 1"
+            "ORDER BY timestamp DESC LIMIT :limit"
         )
-        cursor = self.engine.execute(text(sql), userid=userid)
-        if cursor.rowcount != 1:
+        cursor = self.engine.execute(text(sql), userid=userid, limit=limit)
+        if cursor.rowcount < 1:
             raise NoPlays()
         result = cursor.fetchone()
+        return result
+
+    def get_today_scores(self, qq):
+        sql = "select user_id from rinbot.sdvx_user_info where qq = :qq"
+        cursor = self.engine.execute(text(sql), qq=qq)
+        if cursor.rowcount != 1:
+            raise UserNotFoundError()
+        result = cursor.fetchone()
+        userid = result['user_id']
+        sql = (
+            "SELECT DISTINCT(music.name) AS name, music.chart AS chart, music.artist AS artist, music.data AS mus_data, score.points AS points, score.data AS data, score.timestamp AS timestamp " +
+            "FROM bemani.score_history AS score, bemani.music AS music " +
+            "WHERE score.userid = :userid AND score.musicid = music.id " +
+            "AND music.game = 'sdvx' AND music.version = 6 " +
+            "AND timestamp >= :t " +
+            "ORDER BY timestamp DESC"
+        )
+        t = int(time.mktime(datetime.date.today().timetuple()))
+        cursor = self.engine.execute(text(sql), userid=userid, t=t)
+        if cursor.rowcount < 1:
+            raise NoPlays()
+        result = cursor.fetchall()
         return result
 
 
@@ -138,11 +161,16 @@ def format_score(score) -> Dict[str, Any]:
 
     mdata = deserialize(score['mus_data'])
     data = deserialize(score['data'])
+    stats = data['stats']
 
     formatted_score = {}
     formatted_score['name'] = score['name']
     formatted_score['artist'] = score['artist']
     formatted_score['difficulty'] = mdata['difficulty']
+    formatted_score['critical'] = stats['critical']
+    formatted_score['near'] = stats['near']
+    formatted_score['error'] = stats['error']
+    formatted_score['combo'] = data['combo']
     formatted_score['bpm'] = f"{int(mdata['bpm_min'])}" if mdata['bpm_max'] == mdata[
         'bpm_min'] else f"{int(mdata['bpm_min'])}-{int(mdata['bpm_max'])}"
     formatted_score['score'] = score['points']
