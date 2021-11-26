@@ -10,15 +10,20 @@
 - `\recent`: 查看最近一次游戏记录。
 - `\today`: 查看今日游玩记录。
 
-## Run
+## 前提
 
-1. 安装依赖
+1. 安装 python, poetry, go-cqhttp。并运行 go-cqhttp。
+2. 根据 https://github.com/nonebot/nonebot2/pull/561 修复 fastapi。
 
-```bash
-pip3 install -r requirements.txt
+## 直接运行
+
+1. 使用 peotry 安装需要的依赖
+
+```
+poetry install 
 ```
 
-2. 在 `.env` 中填入所需参数
+2. 在 `.env.*` 中填入所需参数
 
 ```
 CQHTTP_WS_URLS={"QQ 号": "ws://127.0.0.1:6700/"}
@@ -31,4 +36,15 @@ MYSQL_HOST=ipaddr
 
 ```bash
 nb run
+```
+## Docker 部署
+
+```bash
+nb deploy
+```
+
+或
+
+```bash
+sudo docker-compose up -d
 ```

@@ -5,9 +5,17 @@ description = "rinbot"
 authors = ["RinChanNOW"]
 readme = "README.md"
 
+[[tool.poetry.source]]
+name = "tsinghua"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true
+
 [tool.poetry.dependencies]
 python = "^3.7.3"
 nonebot2 = "^2.0.0.a1"
+mysqlclient = "^2.1.0"
+SQLAlchemy = "^1.4.27"
+nonebot-adapter-cqhttp = "^2.0.0-alpha.16"
 
 [tool.poetry.dev-dependencies]
 nb-cli = "^0.5.0"
@@ -15,7 +23,7 @@ nonebot-plugin-test = "^0.3.0"
 
 [nonebot.plugins]
 plugins = []
-plugin_dirs = ["src/plugins"]
+plugin_dirs = ["rinbot/plugins"]
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]

@@ -15,14 +15,13 @@ from nonebot.adapters.cqhttp import Bot as CQHTTPBot
 
 # You can pass some keyword args config to init function
 nonebot.init()
-# app = nonebot.get_asgi()
+app = nonebot.get_asgi()
 
 driver = nonebot.get_driver()
 driver.register_adapter("cqhttp", CQHTTPBot)
 
 nonebot.load_builtin_plugins()
-# load sdvx plugin
-nonebot.load_plugin("rinbot.plugins.sdvx")
+
 # Please DO NOT modify this file unless you know what you are doing!
 # As an alternative, you should use command `nb` or modify `pyproject.toml` to load plugins
 nonebot.load_from_toml("pyproject.toml")
