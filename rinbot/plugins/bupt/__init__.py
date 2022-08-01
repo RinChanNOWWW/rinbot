@@ -12,11 +12,12 @@ from .config import Config
 global_config = get_driver().config
 config = Config(**global_config.dict())
 
-rest = ["新一", "新二", "老一", "老二", "风味"]
+rest = ["新一", "新二", "新四", "老一", "老二", "风味"]
 
 menu = {
     "新一": ["面", "粥", "自选", "铁板砂锅"],
     "新二": ["面", "自选"],
+    "新四": ["大盘鸡拌面", "自选", "酸菜鱼"],
     "老一": ["面", "自选"],
     "老二": ["牛肉汤", "烤肉饭", "大鸡饭", "自选", "盖浇饭", "羊肉烩面"],
     "风味": ["香锅", "魔饭青年", "意面", "粥", "汉堡", "自选"]
@@ -33,7 +34,7 @@ async def to_eat(bot: Bot, event: Event):
     else:
         await bot.send(message=f'去{rest[r]}吃吧。', event=event)
 
-what_to_eat = on_regex(pattern="^[去|在](.*)吃啥$")
+what_to_eat = on_regex(pattern="^[去|在](.*)吃[啥|什么]$")
 
 
 @what_to_eat.handle()
