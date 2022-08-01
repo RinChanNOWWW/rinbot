@@ -1,5 +1,4 @@
 import random
-from typing import AnyStr
 
 from nonebot import get_driver
 from nonebot.adapters.cqhttp.event import Event
