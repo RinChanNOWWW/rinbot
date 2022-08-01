@@ -28,7 +28,7 @@ db = DataBase(rinbot_config)
 #     pass
 
 # 绑定卡号
-bind = on_command("bind")
+bind = on_command("sdvx_bind")
 
 
 @bind.handle()
@@ -54,7 +54,7 @@ async def bind_card(bot: Bot, event: Event, state: T_State):
     await bind.finish(f"您的卡号为 {card}，绑定成功！")
 
 # 查询最近的一次游玩分数
-recent = on_command("recent")
+recent = on_command("sdvx_recent")
 
 
 @recent.handle()
@@ -91,7 +91,7 @@ async def recent_play(bot: Bot, event: Event):
     await bot.send(message=play, event=event)
 
 # 查询今日游玩情况
-today = on_command("today")
+today = on_command("sdvx_today")
 
 
 @today.handle()
