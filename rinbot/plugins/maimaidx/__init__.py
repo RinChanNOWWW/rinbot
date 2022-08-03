@@ -296,7 +296,7 @@ async def _(bot: Bot, event: Event, state: T_State):
             s += f'宜 {wm_list[i]}\n'
         elif wm_value[i] == 0:
             s += f'忌 {wm_list[i]}\n'
-    s += "千雪提醒您：打机时不要大力拍打或滑动哦\n今日推荐歌曲："
+    s += "芝麻凛提醒您：打机时不要大力拍打或滑动哦\n今日推荐歌曲："
     music = total_list[h % len(total_list)]
     await jrwm.finish(Message([
         {"type": "text", "data": {"text": s}}
