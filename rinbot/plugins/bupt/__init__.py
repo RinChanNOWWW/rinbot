@@ -1,10 +1,12 @@
 import random
 
-from nonebot import get_driver
+from nonebot import get_driver, on_command
 from nonebot.adapters.cqhttp.event import Event
 from nonebot.plugin import on_keyword, on_regex
 from nonebot.adapters import Bot
 from nonebot.typing import T_State
+
+from buptelecmon.electricitymonitor import ElectricityMonitor
 
 from .config import Config
 
@@ -53,3 +55,48 @@ async def pick_menu(bot: Bot, event: Event, state: T_State):
             await bot.send(message=f'随便你。', event=event)
         else:
             await bot.send(message=f'去{r}吃{meals[m]}吧。', event=event)
+
+bupt_elec = on_command("查电费")
+
+
+@bupt_elec.handle()
+async def get_dorm(bot: Bot, event: Event, state: T_State):
+    dorm = str(event.get_message()).strip()
+    if dorm:
+        state['dorm'] = dorm
+
+
+@bupt_elec.got("dorm", prompt="请输入宿舍号")
+async def elec_query(bot: Bot, event: Event, state: T_State):
+    dorm = state['dorm']
+
+    def convert_to_float(v):
+        ret = 0
+        try:
+            ret = float(v)
+        except:
+            pass
+        return ret
+
+    try:
+        em = ElectricityMonitor()
+        em.login(config.bupt_username, config.bupt_password)
+        res = em.query([dorm])
+        if dorm in res:
+            data = res[dorm]  # xitucheng
+        else:
+            data = list(res.values())[0]  # shahe
+        if data['areaid'] == 1:  # xitucheng
+            msg = f'''校区: 西土城\n宿舍号: {dorm}
+剩余电量: {convert_to_float(data['surplus'])+convert_to_float(data['freeEnd'])} kWh
+剩余赠送电量: {convert_to_float(data['freeEnd'])} kWh
+查询时间: {data['time']}'''
+        else:  # shahe
+            msg = f'''校区: 沙河
+宿舍号: {dorm}
+剩余电费: {convert_to_float(data['surplus'])} 元
+查询时间: {data['time']}'''
+    except Exception as e:
+        await bupt_elec.finish(f"查询失败: {e}")
+
+    await bupt_elec.finish(msg)
