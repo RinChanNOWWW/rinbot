@@ -14,7 +14,9 @@
 
 - `去哪吃`: 去哪个食堂吃饭。
 - `去<食堂名>吃啥`: 去某个食堂吃啥。
-- `查电费 <宿舍号>`: 查询电费，支持西土城与沙河校区。此功能更多信息详见: https://github.com/jerrymakesjelly/electricity-monitor
+- `查电费 <宿舍号>`: 查询电费，支持西土城与沙河校区。
+- `充电费 <宿舍号>`: 生成充电费微信二维码。
+电费相关功能更多信息详见: https://github.com/jerrymakesjelly/electricity-monitor
 
 菜谱:
 
