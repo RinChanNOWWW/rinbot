@@ -1,5 +1,6 @@
 import base64
 from io import BytesIO
+import json
 import random
 
 from nonebot import get_driver, on_command
@@ -17,16 +18,7 @@ from .config import Config
 global_config = get_driver().config
 config = Config(**global_config.dict())
 
-rest = ["新一", "新二", "新四", "老一", "老二", "风味"]
-
-menu = {
-    "新一": ["面", "粥", "自选", "铁板砂锅"],
-    "新二": ["面", "自选"],
-    "新四": ["大盘鸡拌面", "自选", "酸菜鱼"],
-    "老一": ["面", "自选"],
-    "老二": ["牛肉汤", "烤肉饭", "大鸡饭", "自选", "盖浇饭", "羊肉烩面"],
-    "风味": ["香锅", "魔饭青年", "意面", "粥", "汉堡", "自选"]
-}
+menu_file = 'rinbot/plugins/bupt/menu.json'
 
 bupt_help = on_command('bupt_help')
 
@@ -36,6 +28,7 @@ async def help(bot: Bot, event: Event):
     msg = """BUPT相关功能:
 - 去哪吃: 去哪个食堂吃饭。
 - 去<食堂名>吃啥。
+- 来个菜单: 查看支持的食堂与菜品。
 - 查电费 <宿舍号>: 查询宿舍电量。
 - 充电费 <宿舍号>: 生成充电费微信二维码。
 电费相关功能详见: https://github.com/jerrymakesjelly/electricity-monitor
@@ -47,7 +40,15 @@ where_to_eat = on_keyword(set(["去哪吃"]))
 
 @where_to_eat.handle()
 async def to_eat(bot: Bot, event: Event):
-    r = random.randint(0, len(rest) + 1)
+    try:
+        f = open(menu_file)
+        menu = json.load(f)
+        rest = list(dict(menu).keys())
+    except Exception as e:
+        await bot.send(event, f'获取菜单失败: {e}')
+        return
+
+    r = random.randint(0, len(rest))
     if r >= len(rest):
         await bot.send(message="随便你。", event=event)
     else:
@@ -58,11 +59,19 @@ what_to_eat = on_regex(pattern="^[去|在](.*)吃[啥|什么]$")
 
 @what_to_eat.handle()
 async def pick_menu(bot: Bot, event: Event, state: T_State):
+    try:
+        f = open(menu_file)
+        menu = json.load(f)
+        rest = list(dict(menu).keys())
+    except Exception as e:
+        await bot.send(event, f'获取菜单失败: {e}')
+        return
+
     r = state['_matched_groups'][0]
     if r not in menu:
         if r == '':
-            i = random.randint(0, len(rest))
-            j = random.randint(0, len(rest[i]))
+            i = random.randint(0, len(rest) - 1)
+            j = random.randint(0, len(menu[rest[i]]) - 1)
             await bot.send(message=f'去{rest[i]}吃{menu[rest[i]][j]}吧。', event=event)
         else:
             await bot.send(message=f"在巴普特找不到{r}这个餐厅捏。", event=event)
@@ -74,17 +83,34 @@ async def pick_menu(bot: Bot, event: Event, state: T_State):
         else:
             await bot.send(message=f'去{r}吃{meals[m]}吧。', event=event)
 
+get_menu = on_command('来个菜单')
+
+
+@get_menu.handle()
+async def send_menu(bot: Bot, event: Event):
+    try:
+        f = open(menu_file)
+        menu = dict(json.load(f))
+    except Exception as e:
+        await bot.send(event, f'获取菜单失败: {e}')
+        return
+    msg = ''
+    for k in menu:
+        msg += f"{k}: {','.join(menu[k])}\n"
+    print(msg)
+    await bot.send(event, msg)
+
 elec_query = on_command("查电费")
 
 
-@elec_query.handle()
+@ elec_query.handle()
 async def get_dorm(bot: Bot, event: Event, state: T_State):
     dorm = str(event.get_message()).strip()
     if dorm:
         state['dorm'] = dorm
 
 
-@elec_query.got("dorm", prompt="请输入宿舍号")
+@ elec_query.got("dorm", prompt="请输入宿舍号")
 async def elec_query(bot: Bot, event: Event, state: T_State):
     dorm = state['dorm']
 
@@ -122,14 +148,14 @@ async def elec_query(bot: Bot, event: Event, state: T_State):
 elec_charge = on_command("充电费")
 
 
-@elec_charge.handle()
+@ elec_charge.handle()
 async def get_dorm(bot: Bot, event: Event, state: T_State):
     dorm = str(event.get_message()).strip()
     if dorm:
         state['dorm'] = dorm
 
 
-@elec_charge.got("dorm", prompt="请输入宿舍号")
+@ elec_charge.got("dorm", prompt="请输入宿舍号")
 async def elec_query(bot: Bot, event: Event, state: T_State):
     dorm = state['dorm']
 
