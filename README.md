@@ -25,11 +25,10 @@
 
 From: https://github.com/Diving-Fish/mai-bot
 
-## 前提
+## 0. 前提
 
 1. 安装 python, poetry, go-cqhttp。并运行 go-cqhttp。
-2. 根据 https://github.com/nonebot/nonebot2/pull/561 修复 fastapi。
-3. 在 *rinbot/plugins/bupt* 下创建 *menu.json* 文件，填入食堂与菜品，如:
+2. 在 *rinbot/plugins/bupt* 下创建 *menu.json* 文件，填入食堂与菜品，如:
 
 ```json
 {
@@ -42,7 +41,7 @@ From: https://github.com/Diving-Fish/mai-bot
 }
 ```
 
-## 直接运行
+## 1. 运行 bot
 
 1. 使用 peotry 安装需要的依赖
 
@@ -59,12 +58,15 @@ MYSQL_PASSWD=passwd
 MYSQL_HOST=ipaddr
 ```
 
-3. 使用 `nb-cli` 启动 bot
+### Opt 1. 直接运行
+
+使用 `nb-cli` 启动 bot
 
 ```bash
 nb run
 ```
-## Docker 部署
+
+### Opt 2. Docker 部署
 
 ```bash
 nb deploy
@@ -80,4 +82,21 @@ P.S. peotry 中引入新依赖后需要重新构建镜像:
 
 ```bash
 sudo docker-compose build
+```
+
+## 2. 使用反向代理方式运行 go-cqhttp
+
+config.yaml:
+
+```yaml
+# server 部分
+servers:
+- http:
+  host: 127.0.0.1
+  port: 5700
+  timeout: 5
+  middlewares:
+    <<: *default
+- ws-reverse:
+  universal: ws://127.0.0.1:8080/cqhttp/ws
 ```
