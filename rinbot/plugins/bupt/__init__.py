@@ -103,15 +103,15 @@ async def send_menu(bot: Bot, event: Event):
 elec_query = on_command("查电费")
 
 
-@ elec_query.handle()
-async def get_dorm(bot: Bot, event: Event, state: T_State):
+@elec_query.handle()
+async def query_get_dorm(bot: Bot, event: Event, state: T_State):
     dorm = str(event.get_message()).strip()
     if dorm:
         state['dorm'] = dorm
 
 
-@ elec_query.got("dorm", prompt="请输入宿舍号")
-async def elec_query(bot: Bot, event: Event, state: T_State):
+@elec_query.got("dorm", prompt="请输入宿舍号")
+async def elec_query_body(bot: Bot, event: Event, state: T_State):
     dorm = state['dorm']
 
     def convert_to_float(v):
@@ -148,15 +148,15 @@ async def elec_query(bot: Bot, event: Event, state: T_State):
 elec_charge = on_command("充电费")
 
 
-@ elec_charge.handle()
-async def get_dorm(bot: Bot, event: Event, state: T_State):
+@elec_charge.handle()
+async def charge_get_dorm(bot: Bot, event: Event, state: T_State):
     dorm = str(event.get_message()).strip()
     if dorm:
         state['dorm'] = dorm
 
 
-@ elec_charge.got("dorm", prompt="请输入宿舍号")
-async def elec_query(bot: Bot, event: Event, state: T_State):
+@elec_charge.got("dorm", prompt="请输入宿舍号")
+async def elec_charge_body(bot: Bot, event: Event, state: T_State):
     dorm = state['dorm']
 
     try:
