@@ -52,10 +52,21 @@ poetry install
 2. 在 `.env.*` 中填入所需参数
 
 ```
-CQHTTP_WS_URLS={"QQ 号": "ws://127.0.0.1:6700/"}
+# Bot config
+HOST=127.0.0.1
+PORT=8080
+NICKNAME=["rin", "rinbot", "凛", "芝麻凛", "志摩凛", "志摩凛"]
+COMMAND_START=[""]
+SUPERUSERS=["your own qq"]
+# CQHTTP config
+CQHTTP_WS_URLS={"bot's qq": "ws://127.0.0.1:6700/"}
+# SDVX MySQL Server config
 MYSQL_USER=user
 MYSQL_PASSWD=passwd
 MYSQL_HOST=ipaddr
+# BUPT config
+BUPT_USERNAME=bupt_username
+BUPT_PASSWORD=bupt_password
 ```
 
 ### Opt 1. 直接运行
