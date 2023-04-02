@@ -27,7 +27,7 @@ From: https://github.com/Diving-Fish/mai-bot
 
 ## 0. 前提
 
-1. 安装 python, poetry, go-cqhttp。并运行 go-cqhttp。
+1. 安装 python (3.8+), go-cqhttp。并运行 go-cqhttp。
 2. 在 *rinbot/plugins/bupt* 下创建 *menu.json* 文件，填入食堂与菜品，如:
 
 ```json
@@ -41,32 +41,45 @@ From: https://github.com/Diving-Fish/mai-bot
 }
 ```
 
-## 1. 运行 bot
+## 1. 使用正向 WS 方式运行 go-cqhttp
 
-1. 使用 peotry 安装需要的依赖
+config.yaml:
+
+```yaml
+# server 部分
+servers:
+- ws:
+  # 正向WS服务器监听地址
+  address: 0.0.0.0:8080
+  middlewares:
+  <<: *default # 引用默认中间件
+```
+
+## 2. 运行 bot
+
+1. 创建虚拟环境并安装依赖
 
 ```
-poetry install 
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt 
 ```
 
 2. 在 `.env.*` 中填入所需参数
 
+
 ```
-# Bot config
-HOST=127.0.0.1
-PORT=8080
+DRIVER=~websockets
+ONEBOT_WS_URLS=["ws://<ip>:8080"]
+PORT=8081
 NICKNAME=["rin", "rinbot", "凛", "芝麻凛", "志摩凛", "志摩凛"]
 COMMAND_START=[""]
-SUPERUSERS=["your own qq"]
-# CQHTTP config
-CQHTTP_WS_URLS={"bot's qq": "ws://127.0.0.1:6700/"}
-# SDVX MySQL Server config
+MYSQL_HOST=mysql_host
 MYSQL_USER=user
 MYSQL_PASSWD=passwd
-MYSQL_HOST=ipaddr
-# BUPT config
-BUPT_USERNAME=bupt_username
-BUPT_PASSWORD=bupt_password
+SUPERUSERS=["qq", ...]
+BUPT_USERNAME=学号
+BUPT_PASSWORD=信息门户密码
 ```
 
 ### Opt 1. 直接运行
@@ -80,7 +93,7 @@ nb run
 ### Opt 2. Docker 部署
 
 ```bash
-nb deploy
+nb docker up # https://v2.nonebot.dev/docs/best-practice/deployment
 ```
 
 或
@@ -89,25 +102,3 @@ nb deploy
 sudo docker-compose up -d
 ```
 
-P.S. peotry 中引入新依赖后需要重新构建镜像:
-
-```bash
-sudo docker-compose build
-```
-
-## 2. 使用反向代理方式运行 go-cqhttp
-
-config.yaml:
-
-```yaml
-# server 部分
-servers:
-- http:
-  host: 127.0.0.1
-  port: 5700
-  timeout: 5
-  middlewares:
-    <<: *default
-- ws-reverse:
-  universal: ws://127.0.0.1:8080/cqhttp/ws
-```
