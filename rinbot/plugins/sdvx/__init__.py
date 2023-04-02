@@ -1,7 +1,7 @@
 import time
 
 from nonebot.adapters import Bot
-from nonebot.adapters.cqhttp.event import Event
+from nonebot.adapters.onebot.v11.event import Event
 from nonebot import on_command
 from nonebot import get_driver
 from nonebot.permission import SUPERUSER

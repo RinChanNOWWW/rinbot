@@ -1,33 +1,14 @@
-[tool.poetry]
-name = "rinbot"
+[project]
+name = "rinbot-new"
 version = "0.1.0"
-description = "rinbot"
-authors = ["RinChanNOW"]
+description = "rinbot-new"
 readme = "README.md"
+requires-python = ">=3.8, <4.0"
 
-[[tool.poetry.source]]
-name = "tsinghua"
-url = "https://pypi.tuna.tsinghua.edu.cn/simple"
-default = true
-
-[tool.poetry.dependencies]
-python = "^3.7.3"
-nonebot2 = "^2.0.0.a1"
-mysqlclient = "^2.1.0"
-SQLAlchemy = "^1.4.27"
-nonebot-adapter-cqhttp = "^2.0.0-alpha.16"
-Pillow = "^9.2.0"
-aiohttp = "^3.8.1"
-buptelecmon = { git = "https://github.com/jerrymakesjelly/electricity-monitor.git" }
-
-[tool.poetry.dev-dependencies]
-nb-cli = "^0.5.0"
-nonebot-plugin-test = "^0.3.0"
-
-[nonebot.plugins]
+[tool.nonebot]
+adapters = [
+    { name = "OneBot V11", module_name = "nonebot.adapters.onebot.v11" }
+]
 plugins = []
-plugin_dirs = ["rinbot/plugins"]
-
-[build-system]
-requires = ["poetry_core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+plugin_dirs = ["rinbot/plugins", "rinbot/plugins/maimaidx/plugins"]
+builtin_plugins = ["echo"]

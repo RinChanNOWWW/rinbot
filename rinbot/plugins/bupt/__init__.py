@@ -4,8 +4,8 @@ import json
 import random
 
 from nonebot import get_driver, on_command
-from nonebot.adapters.cqhttp.event import Event
-from nonebot.adapters.cqhttp import Message
+from nonebot.adapters.onebot.v11.event import Event
+from nonebot.adapters.onebot.v11 import Message
 from nonebot.plugin import on_keyword, on_regex
 from nonebot.adapters import Bot
 from nonebot.typing import T_State
@@ -105,7 +105,7 @@ elec_query = on_command("查电费")
 
 @elec_query.handle()
 async def query_get_dorm(bot: Bot, event: Event, state: T_State):
-    dorm = str(event.get_message()).strip()
+    dorm = str(event.get_message()).strip().split(' ')[1]
     if dorm:
         state['dorm'] = dorm
 
