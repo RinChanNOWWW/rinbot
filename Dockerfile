@@ -1,9 +1,36 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8
+FROM python:3.8 as requirements_stage
 
-RUN python3 -m pip config set global.index-url https://mirrors.aliyun.com/pypi/simple
+WORKDIR /wheel
 
-RUN python3 -m pip install poetry && poetry config virtualenvs.create false
+RUN python -m pip install --user pipx
 
-COPY ./pyproject.toml ./poetry.lock* /app/
+COPY ./pyproject.toml \
+  ./requirements.txt \
+  /wheel/
 
-RUN poetry install --no-root --no-dev
+
+RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+
+RUN python -m pip wheel --wheel-dir=/wheel --no-cache-dir --requirement ./requirements.txt
+
+RUN python -m pipx run --no-cache nb-cli generate -f /tmp/bot.py
+
+
+FROM python:3.8-slim
+
+WORKDIR /app
+
+ENV TZ Asia/Shanghai
+ENV PYTHONPATH=/app
+
+COPY --from=requirements_stage /tmp/bot.py /app
+
+COPY --from=requirements_stage /wheel /wheel
+
+RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+
+RUN pip install --no-cache-dir --no-index --find-links=/wheel -r /wheel/requirements.txt && rm -rf /wheel 
+
+COPY . /app/
+
+CMD ["python", "bot.py"]
