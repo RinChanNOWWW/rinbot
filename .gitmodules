@@ -1,3 +1,4 @@
 [submodule "rinbot/plugins/imgsearch"]
 	path = rinbot/plugins/imgsearch
-	url = https://github.com/bakashigure/nonebot_plugin_imgsearch
+	url = https://github.com/RinChanNOWWW/nonebot_plugin_imgsearch
+	branch = rin-patch
