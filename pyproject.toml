@@ -10,5 +10,5 @@ adapters = [
     { name = "OneBot V11", module_name = "nonebot.adapters.onebot.v11" }
 ]
 plugins = []
-plugin_dirs = ["rinbot/plugins", "rinbot/plugins/maimaidx/plugins"]
+plugin_dirs = ["rinbot/plugins", "rinbot/plugins/maimaidx/plugins", "rinbot/plugins/imgsearch/nonebot_plugin_imgsearch"]
 builtin_plugins = ["echo"]
