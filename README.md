@@ -17,13 +17,18 @@
 - `来个菜单`: 查看支持的食堂与菜品。
 - `查电费 <宿舍号>`: 查询电费，支持西土城与沙河校区。
 - `充电费 <宿舍号>`: 生成充电费微信二维码。
-电费相关功能更多信息详见: https://github.com/jerrymakesjelly/electricity-monitor
+
+电费相关功能更多信息详见: [OpenBUPT/bupt-elec](https://github.com/OpenBUPT/bupt-elec) (MIT License, forked from [jerrymakesjelly/electricity-monitor](https://github.com/jerrymakesjelly/electricity-monitor))
 
 ### MaimaiDX 
 
 - `mai_help`: 使用指南。
 
-From: https://github.com/Diving-Fish/mai-bot
+Codes copied from: [Diving-Fish/mai-bot](https://github.com/Diving-Fish/mai-bot) (MIT License)
+
+### 搜图
+
+Git submodule: [RinChanNOWWW/nonebot_plugin_imgsearch](https://github.com/RinChanNOWWW/nonebot_plugin_imgsearch) (MIT License, forked from [bakashigure/nonebot_plugin_imgsearch](https://github.com/bakashigure/nonebot_plugin_imgsearch))
 
 ## 0. 前提
 
@@ -80,6 +85,7 @@ MYSQL_PASSWD=passwd
 SUPERUSERS=["qq", ...]
 BUPT_USERNAME=学号
 BUPT_PASSWORD=信息门户密码
+saucenao_api_key=SAUCENAO_API
 ```
 
 ### Opt 1. 直接运行
