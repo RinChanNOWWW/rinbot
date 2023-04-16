@@ -30,6 +30,10 @@ Codes copied from: [Diving-Fish/mai-bot](https://github.com/Diving-Fish/mai-bot)
 
 Git submodule: [RinChanNOWWW/nonebot_plugin_imgsearch](https://github.com/RinChanNOWWW/nonebot_plugin_imgsearch) (MIT License, forked from [bakashigure/nonebot_plugin_imgsearch](https://github.com/bakashigure/nonebot_plugin_imgsearch))
 
+### Bangumi
+
+- `今日新番`：列出当日新番。（数据来源：Bangumi）
+
 ## 0. 前提
 
 1. 安装 python (3.8+), go-cqhttp。并运行 go-cqhttp。
