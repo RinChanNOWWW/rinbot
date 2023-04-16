@@ -5,9 +5,10 @@ import random
 
 from nonebot import get_driver, on_command
 from nonebot.adapters.onebot.v11.event import Event
-from nonebot.adapters.onebot.v11 import Message
+from nonebot.adapters.onebot.v11 import Message, MessageSegment
 from nonebot.plugin import on_keyword, on_regex
 from nonebot.adapters import Bot
+from nonebot.params import CommandArg
 from nonebot.typing import T_State
 
 from buptelecmon.electricitymonitor import ElectricityMonitor
@@ -100,19 +101,13 @@ async def send_menu(bot: Bot, event: Event):
     print(msg)
     await bot.send(event, msg)
 
-elec_query = on_command("查电费")
+elec_query_command = on_command("查电费")
 
-
-@elec_query.handle()
-async def query_get_dorm(bot: Bot, event: Event, state: T_State):
-    dorm = str(event.get_message()).strip().split(' ')[1]
-    if dorm:
-        state['dorm'] = dorm
-
-
-@elec_query.got("dorm", prompt="请输入宿舍号")
-async def elec_query_body(bot: Bot, event: Event, state: T_State):
-    dorm = state['dorm']
+@elec_query_command.handle()
+async def elec_query(args: Message = CommandArg()):
+    dorm = args.extract_plain_text()
+    if dorm == '': 
+        await elec_query_command.finish('请输入宿舍号')
 
     def convert_to_float(v):
         ret = 0
@@ -141,23 +136,18 @@ async def elec_query_body(bot: Bot, event: Event, state: T_State):
 剩余电费: {convert_to_float(data['surplus'])} 元
 查询时间: {data['time']}'''
     except Exception as e:
-        await elec_query.finish(f"查询失败: {e}")
+        await elec_query_command.finish(f"查询失败: {e}")
 
-    await elec_query.finish(msg)
+    await elec_query_command.finish(msg)
 
-elec_charge = on_command("充电费")
-
-
-@elec_charge.handle()
-async def charge_get_dorm(bot: Bot, event: Event, state: T_State):
-    dorm = str(event.get_message()).strip()
-    if dorm:
-        state['dorm'] = dorm
+elec_charge_command = on_command("充电费")
 
 
-@elec_charge.got("dorm", prompt="请输入宿舍号")
-async def elec_charge_body(bot: Bot, event: Event, state: T_State):
-    dorm = state['dorm']
+@elec_charge_command.handle()
+async def elec_charge(args: Message = CommandArg()):
+    dorm = args.extract_plain_text()
+    if dorm == '': 
+        await elec_charge_command.finish('请输入宿舍号')
 
     try:
         em = ElectricityMonitor()
@@ -171,11 +161,6 @@ async def elec_charge_body(bot: Bot, event: Event, state: T_State):
         base64_str = base64.b64encode(byte_data)
 
     except Exception as e:
-        await elec_charge.finish(f"获取充值地址失败: {e}")
+        await elec_charge_command.finish(f"获取充值地址失败: {e}")
 
-    await elec_charge.finish(Message([{
-        "type": "image",
-        "data": {
-            "file": f"base64://{str(base64_str, encoding='utf-8')}"
-        }
-    }]))
+    await elec_charge_command.finish(MessageSegment.image(f"base64://{str(base64_str, encoding='utf-8')}"))
