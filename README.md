@@ -33,6 +33,7 @@ Git submodule: [RinChanNOWWW/nonebot_plugin_imgsearch](https://github.com/RinCha
 ### Bangumi
 
 - `今日新番`：列出当日新番。（数据来源：Bangumi）
+- `新番表 <星期>`: 列出指定星期的新番表。（星期一：1, ..., 星期日：7）
 
 ## 0. 前提
 
