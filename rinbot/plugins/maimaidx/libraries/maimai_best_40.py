@@ -5,7 +5,7 @@ from typing import Optional, Dict, List, Tuple
 
 import aiohttp
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
-from .maimaidx_music import get_cover_len4_id, total_list
+from .maimaidx_music import get_cover_len5_id, total_list
 
 
 scoreRank = 'D C B BB BBB A AA AAA S S+ SS SS+ SSS SSS+'.split(' ')
@@ -69,7 +69,7 @@ class BestList(object):
         self.data.append(elem)
         self.data.sort()
         self.data.reverse()
-        while(len(self.data) > self.size):
+        while (len(self.data) > self.size):
             del self.data[-1]
 
     def pop(self):
@@ -212,9 +212,9 @@ class DrawBest(object):
             j = num % 5
             chartInfo = sdBest[num]
             pngPath = self.cover_dir + \
-                f'{get_cover_len4_id(chartInfo.idNum)}.png'
+                f'{get_cover_len5_id(chartInfo.idNum)}.png'
             if not os.path.exists(pngPath):
-                pngPath = self.cover_dir + '1000.png'
+                pngPath = self.cover_dir + '01000.png'
             temp = Image.open(pngPath).convert('RGB')
             temp = self._resizePic(temp, itemW / temp.size[0])
             temp = temp.crop(
@@ -259,7 +259,7 @@ class DrawBest(object):
         for num in range(len(sdBest), sdBest.size):
             i = num // 5
             j = num % 5
-            temp = Image.open(self.cover_dir + f'1000.png').convert('RGB')
+            temp = Image.open(self.cover_dir + f'01000.png').convert('RGB')
             temp = self._resizePic(temp, itemW / temp.size[0])
             temp = temp.crop(
                 (0, (temp.size[1] - itemH) / 2, itemW, (temp.size[1] + itemH) / 2))
@@ -271,9 +271,9 @@ class DrawBest(object):
             j = num % 3
             chartInfo = dxBest[num]
             pngPath = self.cover_dir + \
-                f'{get_cover_len4_id(chartInfo.idNum)}.png'
+                f'{get_cover_len5_id(chartInfo.idNum)}.png'
             if not os.path.exists(pngPath):
-                pngPath = self.cover_dir + '1000.png'
+                pngPath = self.cover_dir + '01000.png'
             temp = Image.open(pngPath).convert('RGB')
             temp = self._resizePic(temp, itemW / temp.size[0])
             temp = temp.crop(
@@ -318,7 +318,7 @@ class DrawBest(object):
         for num in range(len(dxBest), dxBest.size):
             i = num // 3
             j = num % 3
-            temp = Image.open(self.cover_dir + f'1000.png').convert('RGB')
+            temp = Image.open(self.cover_dir + f'01000.png').convert('RGB')
             temp = self._resizePic(temp, itemW / temp.size[0])
             temp = temp.crop(
                 (0, (temp.size[1] - itemH) / 2, itemW, (temp.size[1] + itemH) / 2))

@@ -3,13 +3,13 @@ from nonebot.params import CommandArg, EventMessage
 from nonebot.adapters import Event
 from nonebot.adapters.onebot.v11 import Message, MessageSegment
 
-from ..libraries.maimai_best_50 import generate50
 from ..libraries.tool import hash
 from ..libraries.maimaidx_music import *
 from ..libraries.image import *
 from ..libraries.maimai_best_40 import generate
-
+from ..libraries.maimai_best_50 import generate50
 import re
+
 
 def song_txt(music: Music):
     return Message([
@@ -17,7 +17,7 @@ def song_txt(music: Music):
             "text": f"{music.id}. {music.title}\n"
         }),
         MessageSegment("image", {
-            "file": f"https://www.diving-fish.com/covers/{get_cover_len4_id(music.id)}.png"
+            "file": f"https://www.diving-fish.com/covers/{get_cover_len5_id(music.id)}.png"
         }),
         MessageSegment("text", {
             "text": f"\n{'/'.join(music.level)}"
@@ -32,9 +32,10 @@ def inner_level_q(ds1, ds2=None):
         music_data = total_list.filter(ds=(ds1, ds2))
     else:
         music_data = total_list.filter(ds=ds1)
-    for music in sorted(music_data, key = lambda i: int(i['id'])):
+    for music in sorted(music_data, key=lambda i: int(i['id'])):
         for i in music.diff:
-            result_set.append((music['id'], music['title'], music['ds'][i], diff_label[i], music['level'][i]))
+            result_set.append(
+                (music['id'], music['title'], music['ds'][i], diff_label[i], music['level'][i]))
     return result_set
 
 
@@ -79,7 +80,8 @@ async def _(event: Event, message: Message = EventMessage()):
         if res.groups()[1] == "":
             music_data = total_list.filter(level=level, type=tp)
         else:
-            music_data = total_list.filter(level=level, diff=['绿黄红紫白'.index(res.groups()[1])], type=tp)
+            music_data = total_list.filter(
+                level=level, diff=['绿黄红紫白'.index(res.groups()[1])], type=tp)
         if len(music_data) == 0:
             rand_result = "没有这样的乐曲哦。"
         else:
@@ -112,7 +114,7 @@ async def _(event: Event, message: Message = EventMessage()):
         await search_music.send("没有找到这样的乐曲。")
     elif len(res) < 50:
         search_result = ""
-        for music in sorted(res, key = lambda i: int(i['id'])):
+        for music in sorted(res, key=lambda i: int(i['id'])):
             search_result += f"{music['id']}. {music['title']}\n"
         await search_music.finish(Message([
             MessageSegment("text", {
@@ -133,13 +135,14 @@ async def _(event: Event, message: Message = EventMessage()):
     if groups[0] != "":
         try:
             level_index = level_labels.index(groups[0])
-            level_name = ['Basic', 'Advanced', 'Expert', 'Master', 'Re: MASTER']
+            level_name = ['Basic', 'Advanced',
+                          'Expert', 'Master', 'Re: MASTER']
             name = groups[1]
             music = total_list.by_id(name)
             chart = music['charts'][level_index]
             ds = music['ds'][level_index]
             level = music['level'][level_index]
-            file = f"https://www.diving-fish.com/covers/{get_cover_len4_id(music['id'])}.png"
+            file = f"https://www.diving-fish.com/covers/{get_cover_len5_id(music['id'])}.png"
             if len(chart['notes']) == 4:
                 msg = f'''{level_name[level_index]} {level}({ds})
 TAP: {chart['notes'][0]}
@@ -172,7 +175,7 @@ BREAK: {chart['notes'][4]}
         name = groups[1]
         music = total_list.by_id(name)
         try:
-            file =f"https://www.diving-fish.com/covers/{get_cover_len4_id(music['id'])}.png"
+            file = f"https://www.diving-fish.com/covers/{get_cover_len5_id(music['id'])}.png"
             await query_chart.send(Message([
                 MessageSegment("text", {
                     "text": f"{music['id']}. {music['title']}\n"
@@ -188,7 +191,8 @@ BREAK: {chart['notes'][4]}
             await query_chart.send("未找到该乐曲")
 
 
-wm_list = ['拼机', '推分', '越级', '下埋', '夜勤', '练底力', '练手法', '打旧框', '干饭', '抓绝赞', '收歌']
+wm_list = ['拼机', '推分', '越级', '下埋', '夜勤',
+           '练底力', '练手法', '打旧框', '干饭', '抓绝赞', '收歌']
 
 
 jrwm = on_command('今日舞萌', aliases={'今日mai'})
@@ -241,7 +245,8 @@ BREAK\t5/12.5/25(外加200落)'''
         try:
             grp = re.match(r, argv[0]).groups()
             level_labels = ['绿', '黄', '红', '紫', '白']
-            level_labels2 = ['Basic', 'Advanced', 'Expert', 'Master', 'Re:MASTER']
+            level_labels2 = ['Basic', 'Advanced',
+                             'Expert', 'Master', 'Re:MASTER']
             level_index = level_labels.index(grp[0])
             chart_id = grp[2]
             line = float(argv[1])
@@ -294,9 +299,9 @@ best_50_pic = on_command('b50')
 async def _(event: Event, message: Message = CommandArg()):
     username = str(message).strip()
     if username == "":
-        payload = {'qq': str(event.get_user_id()),'b50':True}
+        payload = {'qq': str(event.get_user_id()), 'b50': True}
     else:
-        payload = {'username': username,'b50':  True}
+        payload = {'username': username, 'b50':  True}
     img, success = await generate50(payload)
     if success == 400:
         await best_50_pic.send("未找到此玩家，请确保此玩家的用户名和查分器中的用户名相同。")
