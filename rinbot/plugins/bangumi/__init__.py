@@ -3,7 +3,6 @@ from nonebot.adapters import Bot
 from nonebot.adapters.onebot.v11.event import Event
 from nonebot.adapters import Message
 from nonebot.params import CommandArg
-from nonebot.exception import FinishedException
 
 from typing import Optional, List
 import aiohttp
