@@ -179,7 +179,7 @@ class DrawBest(object):
             num = '06'
         elif self.playerRating < 13000:
             num = '07'
-        elif self.playerRating < 14500:
+        elif self.playerRating < 14000:
             num = '08'
         elif self.playerRating < 15000:
             num = '09'
