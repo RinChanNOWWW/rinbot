@@ -12,8 +12,8 @@ async def preprocessor(bot, event, state):
     if hasattr(event, 'message_type') and event.message_type == "private" and event.sub_type != "friend":
         raise IgnoredException("not reply group temp message")
 
-        
-help = on_command('help')
+
+help = on_command('mai_help')
 
 
 @help.handle()
@@ -36,7 +36,8 @@ XXXmaimaiXXX什么 随机一首歌
 
 
 async def _group_poke(bot: Bot, event: Event) -> bool:
-    value = (event.notice_type == "notify" and event.sub_type == "poke" and event.target_id == int(bot.self_id))
+    value = (event.notice_type == "notify" and event.sub_type ==
+             "poke" and event.target_id == int(bot.self_id))
     return value
 
 
@@ -49,6 +50,6 @@ async def _(bot: Bot, event: Event, state: T_State):
         event.__delattr__('group_id')
     await poke.send(Message([
         MessageSegment("poke",  {
-           "qq": f"{event.sender_id}"
-       })
+            "qq": f"{event.sender_id}"
+        })
     ]))
