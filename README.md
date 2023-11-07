@@ -4,6 +4,10 @@
 
 ## 功能
 
+### 获取帮助
+
+使用方法：@bot 帮助
+
 ### SDVX（BUPT 网限定）
 
 - `sdvx_bind CARD`: 将 QQ 与卡号绑定。
@@ -34,6 +38,7 @@ Git submodule: [RinChanNOWWW/nonebot_plugin_imgsearch](https://github.com/RinCha
 
 - `今日新番`：列出当日新番。（数据来源：Bangumi）
 - `新番表 <星期>`: 列出指定星期的新番表。（星期一：1, ..., 星期日：7）
+- 新番推送。See: https://github.com/RinChanNOWWW/blooming
 
 ## 0. 前提
 
