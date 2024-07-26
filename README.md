@@ -24,12 +24,6 @@
 
 电费相关功能更多信息详见: [OpenBUPT/bupt-elec](https://github.com/OpenBUPT/bupt-elec) (MIT License, forked from [jerrymakesjelly/electricity-monitor](https://github.com/jerrymakesjelly/electricity-monitor))
 
-### MaimaiDX 
-
-- `mai_help`: 使用指南。
-
-Codes copied from: [Diving-Fish/mai-bot](https://github.com/Diving-Fish/mai-bot) (MIT License)
-
 ### 搜图
 
 Git submodule: [RinChanNOWWW/nonebot_plugin_imgsearch](https://github.com/RinChanNOWWW/nonebot_plugin_imgsearch) (MIT License, forked from [bakashigure/nonebot_plugin_imgsearch](https://github.com/bakashigure/nonebot_plugin_imgsearch))
@@ -77,7 +71,7 @@ servers:
 ```
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt 
+pip install -r requirements.txt
 ```
 
 2. 在 `.env.*` 中填入所需参数

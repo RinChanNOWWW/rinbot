@@ -7,8 +7,8 @@ requires-python = ">=3.8, <4.0"
 
 [tool.nonebot]
 adapters = [
-    { name = "OneBot V11", module_name = "nonebot.adapters.onebot.v11" }
+    { name = "QQ", module_name = "nonebot.adapters.qq" }
 ]
 plugins = []
-plugin_dirs = ["rinbot/plugins", "rinbot/plugins/maimaidx/plugins", "rinbot/plugins/imgsearch"]
+plugin_dirs = ["rinbot/plugins", "rinbot/plugins/imgsearch"]
 builtin_plugins = ["echo"]
