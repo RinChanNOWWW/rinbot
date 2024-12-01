@@ -1,6 +1,6 @@
 # rinbot
 
-基于 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) 与 [nonebot2](https://github.com/nonebot/nonebot2) 的 QQ 机器人。
+基于 [NapCatQQ](https://github.com/NapNeko/NapCatQQ) 与 [nonebot2](https://github.com/nonebot/nonebot2) 的 QQ 机器人。
 
 ## 功能
 
@@ -24,7 +24,7 @@
 
 电费相关功能更多信息详见: [OpenBUPT/bupt-elec](https://github.com/OpenBUPT/bupt-elec) (MIT License, forked from [jerrymakesjelly/electricity-monitor](https://github.com/jerrymakesjelly/electricity-monitor))
 
-### MaimaiDX 
+### MaimaiDX
 
 - `mai_help`: 使用指南。
 
@@ -56,19 +56,9 @@ Git submodule: [RinChanNOWWW/nonebot_plugin_imgsearch](https://github.com/RinCha
 }
 ```
 
-## 1. 使用正向 WS 方式运行 go-cqhttp
+## 1.启动 NapCatQQ 并启动 WS 服务暖
 
-config.yaml:
-
-```yaml
-# server 部分
-servers:
-- ws:
-  # 正向WS服务器监听地址
-  address: 0.0.0.0:8080
-  middlewares:
-  <<: *default # 引用默认中间件
-```
+详见文档 https://napneko.github.io/use/integration#nonebot
 
 ## 2. 运行 bot
 
@@ -77,7 +67,7 @@ servers:
 ```
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt 
+pip install -r requirements.txt
 ```
 
 2. 在 `.env.*` 中填入所需参数
