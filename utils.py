@@ -1,6 +1,7 @@
 import json
 from typing import Any, Dict
 
+
 def deserialize(data: str) -> dict:
     """
     Given a string, deserialize it from JSON.
@@ -17,7 +18,7 @@ def deserialize(data: str) -> dict:
 
         if type(jd) == list:
             # Could be serialized by us, could be a normal list.
-            if len(jd) >= 1 and jd[0] == '__bytes__':
+            if len(jd) >= 1 and jd[0] == "__bytes__":
                 # This is a serialized bytestring
                 return bytes(jd[1:])
 

@@ -9,7 +9,7 @@ def get_cover_len5_id(mid) -> str:
     mid = int(mid)
     if mid > 10000 and mid <= 11000:
         mid -= 10000
-    return f'{mid:05d}'
+    return f"{mid:05d}"
 
 
 def cross(checker: List[Any], elem: Optional[Union[Any, List[Any]]], diff):
@@ -18,7 +18,7 @@ def cross(checker: List[Any], elem: Optional[Union[Any, List[Any]]], diff):
     if not elem or elem is Ellipsis:
         return True, diff
     if isinstance(elem, List):
-        for _j in (range(len(checker)) if diff is Ellipsis else diff):
+        for _j in range(len(checker)) if diff is Ellipsis else diff:
             if _j >= len(checker):
                 continue
             __e = checker[_j]
@@ -26,7 +26,7 @@ def cross(checker: List[Any], elem: Optional[Union[Any, List[Any]]], diff):
                 diff_ret.append(_j)
                 ret = True
     elif isinstance(elem, Tuple):
-        for _j in (range(len(checker)) if diff is Ellipsis else diff):
+        for _j in range(len(checker)) if diff is Ellipsis else diff:
             if _j >= len(checker):
                 continue
             __e = checker[_j]
@@ -34,7 +34,7 @@ def cross(checker: List[Any], elem: Optional[Union[Any, List[Any]]], diff):
                 diff_ret.append(_j)
                 ret = True
     else:
-        for _j in (range(len(checker)) if diff is Ellipsis else diff):
+        for _j in range(len(checker)) if diff is Ellipsis else diff:
             if _j >= len(checker):
                 continue
             __e = checker[_j]
@@ -63,18 +63,18 @@ class Chart(Dict):
     charter: Optional[int] = None
 
     def __getattribute__(self, item):
-        if item == 'tap':
-            return self['notes'][0]
-        elif item == 'hold':
-            return self['notes'][1]
-        elif item == 'slide':
-            return self['notes'][2]
-        elif item == 'touch':
-            return self['notes'][3] if len(self['notes']) == 5 else 0
-        elif item == 'brk':
-            return self['notes'][-1]
-        elif item == 'charter':
-            return self['charter']
+        if item == "tap":
+            return self["notes"][0]
+        elif item == "hold":
+            return self["notes"][1]
+        elif item == "slide":
+            return self["notes"][2]
+        elif item == "touch":
+            return self["notes"][3] if len(self["notes"]) == 5 else 0
+        elif item == "brk":
+            return self["notes"][-1]
+        elif item == "charter":
+            return self["charter"]
         return super().__getattribute__(item)
 
 
@@ -94,10 +94,10 @@ class Music(Dict):
     diff: List[int] = []
 
     def __getattribute__(self, item):
-        if item in {'genre', 'artist', 'release_date', 'bpm', 'version'}:
-            if item == 'version':
-                return self['basic_info']['from']
-            return self['basic_info'][item]
+        if item in {"genre", "artist", "release_date", "bpm", "version"}:
+            if item == "version":
+                return self["basic_info"]["from"]
+            return self["basic_info"][item]
         elif item in self:
             return self[item]
         return super().__getattribute__(item)
@@ -119,18 +119,17 @@ class MusicList(List[Music]):
     def random(self):
         return random.choice(self)
 
-    def filter(self,
-               *,
-               level: Optional[Union[str, List[str]]] = ...,
-               ds: Optional[Union[float, List[float],
-                                  Tuple[float, float]]] = ...,
-               title_search: Optional[str] = ...,
-               genre: Optional[Union[str, List[str]]] = ...,
-               bpm: Optional[Union[float, List[float],
-                                   Tuple[float, float]]] = ...,
-               type: Optional[Union[str, List[str]]] = ...,
-               diff: List[int] = ...,
-               ):
+    def filter(
+        self,
+        *,
+        level: Optional[Union[str, List[str]]] = ...,
+        ds: Optional[Union[float, List[float], Tuple[float, float]]] = ...,
+        title_search: Optional[str] = ...,
+        genre: Optional[Union[str, List[str]]] = ...,
+        bpm: Optional[Union[float, List[float], Tuple[float, float]]] = ...,
+        type: Optional[Union[str, List[str]]] = ...,
+        diff: List[int] = ...,
+    ):
         new_list = MusicList()
         for music in self:
             diff2 = diff
@@ -147,15 +146,17 @@ class MusicList(List[Music]):
                 continue
             if not in_or_equal(music.bpm, bpm):
                 continue
-            if title_search is not Ellipsis and title_search.lower() not in music.title.lower():
+            if (
+                title_search is not Ellipsis
+                and title_search.lower() not in music.title.lower()
+            ):
                 continue
             music.diff = diff2
             new_list.append(music)
         return new_list
 
 
-obj = requests.get(
-    'https://www.diving-fish.com/api/maimaidxprober/music_data').json()
+obj = requests.get("https://www.diving-fish.com/api/maimaidxprober/music_data").json()
 total_list: MusicList = MusicList(obj)
 for __i in range(len(total_list)):
     total_list[__i] = Music(total_list[__i])
