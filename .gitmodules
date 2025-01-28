@@ -2,3 +2,6 @@
 	path = rinbot/plugins/imgsearch
 	url = https://github.com/RinChanNOWWW/nonebot_plugin_imgsearch
 	branch = rin-patch
+[submodule "rinbot/plugins/nonebot-plugin-deepseek"]
+	path = rinbot/plugins/nonebot-plugin-deepseek
+	url = https://github.com/RinChanNOWWW/nonebot-plugin-deepseek
