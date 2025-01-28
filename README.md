@@ -30,9 +30,13 @@ Git submodule: [RinChanNOWWW/nonebot_plugin_imgsearch](https://github.com/RinCha
 - `新番表 <星期>`: 列出指定星期的新番表。（星期一：1, ..., 星期日：7）
 - 新番推送。See: https://github.com/RinChanNOWWW/blooming
 
+### DeepSeek 集成
+
+Git submodule: [RinChanNOWWW/nonebot_plugin_imgsearch](https://github.com/RinChanNOWWW/nonebot-plugin-deepseek) (MIT License, forked from [KomoriDev/nonebot-plugin-deepseek](https://github.com/KomoriDev/nonebot-plugin-deepseek))
+
 ## 0. 前提
 
-1. 安装 python (3.9+), go-cqhttp。并运行 go-cqhttp。
+1. 安装 python (3.10+), go-cqhttp。并运行 go-cqhttp。
 
 ## 1.启动 NapCatQQ 并启动 WS 服务暖
 
@@ -61,8 +65,6 @@ MYSQL_HOST=mysql_host
 MYSQL_USER=user
 MYSQL_PASSWD=passwd
 SUPERUSERS=["qq", ...]
-BUPT_USERNAME=学号
-BUPT_PASSWORD=信息门户密码
 saucenao_api_key=SAUCENAO_API
 ```
 

@@ -9,3 +9,6 @@ beautifulsoup4==4.12.3
 SQLAlchemy==2.0.37
 wheel==0.45.1
 mysqlclient==2.2.7
+nonebot-plugin-waiter==0.8.1
+nonebot_plugin_alconna==0.54.2
+pydantic_settings==2.7.1

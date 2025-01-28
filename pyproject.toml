@@ -1,9 +1,9 @@
 [project]
 name = "rinbot-new"
-version = "0.1.0"
+version = "0.2.0"
 description = "rinbot"
 readme = "README.md"
-requires-python = ">=3.9, <4.0"
+requires-python = ">=3.10, <4.0"
 
 [tool.nonebot]
 adapters = [
@@ -13,5 +13,6 @@ plugins = []
 plugin_dirs = [
     "rinbot/plugins",
     "rinbot/plugins/maimaidx/plugins",
-    "rinbot/plugins/imgsearch"]
+    "rinbot/plugins/imgsearch",
+    "rinbot/plugins/nonebot-plugin-deepseek"]
 builtin_plugins = ["echo"]
