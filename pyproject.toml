@@ -1,14 +1,17 @@
 [project]
 name = "rinbot-new"
 version = "0.1.0"
-description = "rinbot-new"
+description = "rinbot"
 readme = "README.md"
-requires-python = ">=3.8, <4.0"
+requires-python = ">=3.9, <4.0"
 
 [tool.nonebot]
 adapters = [
     { name = "OneBot V11", module_name = "nonebot.adapters.onebot.v11" }
 ]
 plugins = []
-plugin_dirs = ["rinbot/plugins", "rinbot/plugins/maimaidx/plugins", "rinbot/plugins/imgsearch"]
+plugin_dirs = [
+    "rinbot/plugins",
+    "rinbot/plugins/maimaidx/plugins",
+    "rinbot/plugins/imgsearch"]
 builtin_plugins = ["echo"]

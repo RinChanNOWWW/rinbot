@@ -14,16 +14,6 @@
 - `sdvx_recent`: 查看最近一次游戏记录。
 - `sdvx_today`: 查看今日游玩记录。
 
-### BUPT 相关
-
-- `去哪吃`: 去哪个食堂吃饭。
-- `去<食堂名>吃啥`: 去某个食堂吃啥。
-- `来个菜单`: 查看支持的食堂与菜品。
-- `查电费 <宿舍号>`: 查询电费，支持西土城与沙河校区。
-- `充电费 <宿舍号>`: 生成充电费微信二维码。
-
-电费相关功能更多信息详见: [OpenBUPT/bupt-elec](https://github.com/OpenBUPT/bupt-elec) (MIT License, forked from [jerrymakesjelly/electricity-monitor](https://github.com/jerrymakesjelly/electricity-monitor))
-
 ### MaimaiDX
 
 - `mai_help`: 使用指南。
@@ -42,19 +32,7 @@ Git submodule: [RinChanNOWWW/nonebot_plugin_imgsearch](https://github.com/RinCha
 
 ## 0. 前提
 
-1. 安装 python (3.8+), go-cqhttp。并运行 go-cqhttp。
-2. 在 *rinbot/plugins/bupt* 下创建 *menu.json* 文件，填入食堂与菜品，如:
-
-```json
-{
-    "新一": ["面", "粥", "自选", "铁板砂锅"],
-    "新二": ["面", "自选"],
-    "新四": ["大盘鸡拌面", "自选", "酸菜鱼"],
-    "老一": ["面", "自选"],
-    "老二": ["牛肉汤", "烤肉饭", "大鸡饭", "自选", "盖浇饭", "羊肉烩面"],
-    "风味": ["香锅", "魔饭青年", "意面", "粥", "汉堡", "自选"]
-}
-```
+1. 安装 python (3.9+), go-cqhttp。并运行 go-cqhttp。
 
 ## 1.启动 NapCatQQ 并启动 WS 服务暖
 
