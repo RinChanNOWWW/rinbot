@@ -12,3 +12,5 @@ mysqlclient==2.2.7
 nonebot-plugin-waiter==0.8.1
 nonebot_plugin_alconna==0.54.2
 pydantic_settings==2.7.1
+nonebot_plugin_localstore==0.7.3
+

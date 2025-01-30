@@ -143,3 +143,4 @@ dmypy.json
 
 .vscode/
 menu.json
+*.db
