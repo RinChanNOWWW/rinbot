@@ -38,7 +38,7 @@ Git submodule: [RinChanNOWWW/nonebot_plugin_imgsearch](https://github.com/RinCha
 
 1. 安装 python (3.10+), go-cqhttp。并运行 go-cqhttp。
 
-## 1.启动 NapCatQQ 并启动 WS 服务暖
+## 1.启动 NapCatQQ 并启动 WS 服务
 
 详见文档 https://napneko.github.io/use/integration#nonebot
 
